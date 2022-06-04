@@ -2,3 +2,12 @@ n_classes: 10
 
 n_epochs: 40
 batch_size: 128
+
+X_train: "data/X_train.npy"
+Y_train: "data/Y_train.npy"
+X_test: "data/X_test.npy"
+Y_test: "data/Y_test.npy"
+
+model_dir: 'models/custom_cnn'
+
+eval_dir: 'evaluations/'

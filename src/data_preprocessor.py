@@ -1,7 +1,9 @@
 import typer
 import tensorflow as tf
 from tensorflow.keras.datasets import cifar10
-from ruamel.yaml import YAML
+import numpy as np
+from utils import load_dvc_params
+
 
 
 
@@ -16,9 +18,7 @@ def load_data():
 
 
 def preprocess():
-    with open("./params.yaml", "r") as f:
-       yaml = YAML()
-       params = yaml.load(f)
+    params = load_dvc_params()
 
     X_train, y_train, X_test, y_test = load_data()
 
@@ -31,14 +31,12 @@ def preprocess():
     Y_train = tf.keras.utils.to_categorical(y_train, params["n_classes"])
     Y_test = tf.keras.utils.to_categorical(y_test, params["n_classes"])
 
-    data = [X_train,Y_train,X_test,Y_test]
 
     print("Writing preprocessed data to file")
-    for f in data:
-        tf.io.write_file(
-            f"data/{f}", f, name=None
-        )
-
+    np.save(params["X_train"], X_train)
+    np.save(params["Y_train"],Y_train)
+    np.save(params["X_test"],X_test)
+    np.save(params["Y_test"],Y_test)
 
 if __name__ == '__main__':
     typer.run(preprocess)

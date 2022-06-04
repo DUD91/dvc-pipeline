@@ -1,24 +1,23 @@
 stages:
   Load Data:
-    cmd:
-    python data_preprocessor.py
+    cmd: python src/data_preprocessor.py
     deps:
-      - data_preprocessor.py
+      - src/data_preprocessor.py
     outs:
-      - data/X_train
-      - data/Y_train
-      - data/X_test
-      - data/Y_test
+      - data/X_train.npy
+      - data/Y_train.npy
+      - data/X_test.npy
+      - data/Y_test.npy
   Train Model:
-    cmd: python train.py
+    cmd: python src/train.py
     deps:
-      - train.py
+      - src/train.py
     outs:
       - data/train_history
   Evaluate trained Model:
-    cmd: python evaluate.py
+    cmd: python src/evaluate.py
     deps:
-      - evaluate.py
+      - src/evaluate.py
     outs:
       - Model_Evaluation_Report
 

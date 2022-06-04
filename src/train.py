@@ -1,10 +1,12 @@
 import typer
 import tensorflow as tf
+import numpy as np
 from tensorflow.keras.layers import Dense, Dropout, Flatten, Input
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 import pickle
 from datetime import datetime
-from ruamel.yaml import YAML
+from src.utils import load_dvc_params
+
 
 def load_model():
     visible = Input(shape=(32, 32, 3))
@@ -30,17 +32,14 @@ def load_model():
 
 def train():
 
-    with open("./params.yaml", "r") as f:
-       yaml = YAML()
-       params = yaml.load(f)
+    params = load_dvc_params()
 
     model = load_model()
 
-
-    X_train = tf.io.read_file("data/X_train", name=None)
-    Y_train = tf.io.read_file("data/Y_train", name=None)
-    X_test = tf.io.read_file("data/X_test", name=None)
-    Y_test = tf.io.read_file("data/Y_test", name=None)
+    X_train = np.load(params["X_train"])
+    Y_train = np.load(params["Y_train"])
+    X_test = np.load(params["X_test"])
+    Y_test = np.load(params["Y_test"])
 
     model.compile(loss='categorical_crossentropy',
                 optimizer='adam',
