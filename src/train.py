@@ -4,6 +4,7 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten, Input
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 import pickle
 from datetime import datetime
+from ruamel.yaml import YAML
 
 def load_model():
     visible = Input(shape=(32, 32, 3))
@@ -27,7 +28,12 @@ def load_model():
     return cnn
 
 
-def train(n_epochs,batch_size):
+def train():
+
+    with open("./params.yaml", "r") as f:
+       yaml = YAML()
+       params = yaml.load(f)
+
     model = load_model()
 
 
@@ -41,8 +47,8 @@ def train(n_epochs,batch_size):
                 metrics=['accuracy'])
 
     log = model.fit(X_train, Y_train,
-                    batch_size = batch_size,
-                    epochs=n_epochs,
+                    batch_size = params["batch_size"],
+                    epochs=params["n_epochs"],
                     verbose=1,
                     validation_data=(X_test, Y_test))
 

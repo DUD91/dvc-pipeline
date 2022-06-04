@@ -1,6 +1,9 @@
 import typer
 import tensorflow as tf
 from tensorflow.keras.datasets import cifar10
+from ruamel.yaml import YAML
+
+
 
 def load_data():
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
@@ -12,7 +15,11 @@ def load_data():
     return X_train, y_train, X_test, y_test
 
 
-def preprocess(n_classes):
+def preprocess():
+    with open("./params.yaml", "r") as f:
+       yaml = YAML()
+       params = yaml.load(f)
+
     X_train, y_train, X_test, y_test = load_data()
 
     X_train = X_train.astype('float32')
@@ -21,8 +28,8 @@ def preprocess(n_classes):
     X_test /= 255.0
     print(X_train.shape[0], 'train samples')
     print(X_test.shape[0], 'test samples')
-    Y_train = tf.keras.utils.to_categorical(y_train, n_classes)
-    Y_test = tf.keras.utils.to_categorical(y_test, n_classes)
+    Y_train = tf.keras.utils.to_categorical(y_train, params["n_classes"])
+    Y_test = tf.keras.utils.to_categorical(y_test, params["n_classes"])
 
     data = [X_train,Y_train,X_test,Y_test]
 
