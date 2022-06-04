@@ -1,0 +1,23 @@
+stages:
+  Load Data:
+    cmd: python data_preprocessor.py
+    deps:
+      - data_preprocessor.py
+    outs:
+      - data/X_train
+      - data/y_train
+      - data/X_test
+      - data/y_test
+  Train Model:
+    cmd: python train.py --n_epochs 40 n_classes 10
+    deps:
+      - train.py
+    outs:
+      - data/train_history
+  Evaluate trained Model:
+    cmd: python evaluate.py
+    deps:
+      - evaluate.py
+    outs:
+      - Model_Evaluation_Report
+

@@ -1,9 +1,16 @@
 import typer
+import tensorflow as tf
 
 from mdutils.mdutils import MdUtils
 from mdutils import Html
 
-def generate_evaluation_report(X_test, Y_test,model_history, model):
+def generate_evaluation_report():
+    X_test =tf.io.read_file("data/X_test", name=None)
+    Y_test = tf.io.read_file("data/Y_test", name=None)
+
+    model = tf.keras.models.load_model('models/custom_cnn')
+
+    print("Evaluating model on test set")
     loss_test, metric_test = model.evaluate(X_test, Y_test, verbose=0)
 
     mdFile = MdUtils(file_name='Model_Evaluation_Report', title='Model Evaluation Report')
