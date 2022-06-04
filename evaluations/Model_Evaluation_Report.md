@@ -7,6 +7,6 @@ Model Evaluation Report
 
 The model trained on Cifar 10 has the following evaluation metrics: 
 
-Test loss: 1.269 
+Test loss: 1.2545 
 
-Test Accuracy: 0.6886
+Test Accuracy: 0.681
