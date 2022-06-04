@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Dense, Dropout, Flatten, Input
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 import pickle
 from datetime import datetime
-from src.utils import load_dvc_params
+from utils import load_dvc_params
 
 
 def load_model():
